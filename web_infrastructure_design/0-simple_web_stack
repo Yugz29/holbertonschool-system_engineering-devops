@@ -1,1 +1,21 @@
-https://docs.google.com/document/d/1TDYw0lWZtEdXh5hoVTBvyWJ3OqDPvD1Chus0A1W7VDA/edit?usp=sharing
+[USER] 
+   ↓
+[DNS Server] → returns 8.8.8.8
+   ↓
+┌─────────────────────────────────┐
+│  SERVER (8.8.8.8)               │
+│                                 │
+│  ┌──────────────────┐           │
+│  │ Nginx (Web Server)│          │
+│  └────────┬─────────┘           │
+│           ↓                     │
+│  ┌──────────────────┐           │
+│  │ Application Server│          │
+│  └────────┬─────────┘           │
+│           ↓                     │
+│  ┌──────────────────┐           │
+│  │ MySQL (Database) │           │
+│  └──────────────────┘           │
+│                                 │
+│  Domain: www.foobar.com         │
+└─────────────────────────────────┘
