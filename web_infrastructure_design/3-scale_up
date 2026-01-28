@@ -1,0 +1,75 @@
+                         [USER]
+                            |
+                            | ① HTTPS Request
+                            ↓
+        ┌───────────────────────────────────────────┐
+        │    LOAD BALANCER CLUSTER                  │
+        │                                           │
+        │  ┌─────────────────┐  ┌─────────────────┐ |
+        │  │   HAProxy 1     │  │   HAProxy 2     │ |
+        │  │   (Active)      │←→│   (Passive)     │ | 
+        │  │   Primary       │  │   Backup        │ |
+        │  └─────────────────┘  └─────────────────┘ |
+        │                                           │
+        │  Keepalived / Heartbeat                   │
+        │  Virtual IP: 8.8.8.8                      │
+        └───────────────┬───────────────────────────┘
+                        |
+                        | ② HTTP Request
+                        |
+            ┌───────────┴───────────┐
+            |                       |
+            ↓                       |
+    ┌──────────────────┐            |
+    │  WEB SERVER      │            |
+    │  (Server 1)      │            |
+    │                  │            |
+    │  ┌────────────┐  │            |
+    │  │   Nginx    │  │            |
+    │  │            │  │            |
+    │  │ - Serves   │  │            |
+    │  │   static   │  │            |
+    │  │   files    │  │            |
+    │  │ - Reverse  │  │            |
+    │  │   proxy    │  │            |
+    │  └────────────┘  │            |
+    └─────────┬────────┘            |
+              |                     |
+              | ③ Forward dynamic   |
+              |    requests         |
+              ↓                     |
+    ┌──────────────────┐            |
+    │ APPLICATION      │            |
+    │ SERVER           │            |
+    │ (Server 2)       │            |
+    │                  │            |
+    │ ┌────────────┐   │            |
+    │ │ App Logic  │   │            |
+    │ │            │   │            |
+    │ │ - Python   │   │            |
+    │ │ - Node.js  │   │            |
+    │ │ - PHP      │   │            |
+    │ │ - Business │   │            |
+    │ │   logic    │   │            |
+    │ └────────────┘   │            |
+    └─────────┬────────┘            |
+              |                     |
+              | ④ DB Queries        |
+              |                     |
+              ↓                     |
+    ┌──────────────────┐            |
+    │  DATABASE        │            |
+    │  SERVER          │            |
+    │  (Server 3)      │            |
+    │                  │            |
+    │ ┌────────────┐   │            |
+    │ │   MySQL    │   │            |
+    │ │            │   │            |
+    │ │ - Store    │   │            |
+    │ │   data     │   │            |
+    │ │ - Handle   │   │            |
+    │ │   queries  │   │            |
+    │ └────────────┘   │            |
+    └──────────────────┘            |
+                                    |
+    [Optional: Monitoring on all servers]
