@@ -206,29 +206,11 @@ The load balancer is configured in Round Robin mode (the most common case).
 
 ### **🔹 Difference between Primary and Replica for the application**
 
-**Rôle**
-
-**Primary**
-
-**Replica**
-
-Écritures
-
-✅ Oui
-
-❌ Non
-
-Lectures
-
-✅ Oui
-
-✅ Oui
-
-Source de vérité
-
-✅ Oui
-
-❌ Non
+| Role | Primary | Replica |
+|:--------:|:--------:|:--------:|
+| Ecriture| Yes | No |
+| Lectures | Yes | Yes |
+| Source de vérité | Yes | No |
 
 Entries must go through the Primary.
 
@@ -428,9 +410,9 @@ The objective is to enable:
 **Why each component has its own server:**
 
 | Component | Role | Benefits |
-|:-------- |:--------:| --------:|
+|:--------:|:--------:|:--------:|
 | Web Server| Serves static files, receives requests | Independent scalability, less backend overhead |
-| Application server |Business logic, query processing| Separates CPU and memory load from the DB asshole|
+| Application server |Business logic, query processing| Separates CPU and memory load from the DB|
 | Database | Stores data, manages consistency | Insulation, safety and optimised performance |
 
 *   This separation allows each component to be scaled independently as required.
